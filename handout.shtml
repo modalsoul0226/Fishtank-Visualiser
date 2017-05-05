@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="generator" content="HTML Tidy for HTML5 (experimental) for Mac OS X https://github.com/w3c/tidy-html5/tree/c63cc39">
+        <title>
+            CSC207H: Assignment 2
+        </title>
+    </head>
+    <body>
+        <h1>
+            CSC207H: Assignment 2
+        </h1>
+        <p>
+            <strong>Group size:</strong> Individual
+        </p>
+        <p>
+            <strong>Summary:</strong> Understand a mostly-working program that has significant style and design flaws, then clean it up, and then add a feature.
+        </p>
+        <h2>
+            Learning objectives
+        </h2>
+        <p>
+            By the end of this assignment, you will have
+        </p>
+        <ul>
+            <li>read and worked with code that is not well designed.
+            </li>
+            <li>refactored the code to make it more readable and maintainable.
+            </li>
+            <li>added features to the refactored code.
+            </li>
+            <li>worked with Eclipse's formatter.
+            </li>
+            <li>worked with Checkstyle.
+            </li>
+        </ul>
+        <h2>
+            Problem domain
+        </h2>
+        <p>
+            A fish tank holds several kinds of creatures, including fish, seaweed, and bubbles (as you'll see when you run the starter code). Other examples of fish tank items include clams, snails, eels, rocks, and bubblers.
+        </p>
+        <h2>
+            Code Smells
+        </h2>
+        <p>
+            <a target="_blank" href="https://en.wikipedia.org/wiki/Code_smell">Code smells [Wikipedia]</a> are warning signs in your code. Take a look at the list of common code smells on that Wikipedia page. There are related <a target="_blank" href="https://en.wikipedia.org/wiki/Design_smell">Design smells [Wikipedia]</a>, which you should also read about.
+        </p>
+        <p>
+            Here is a blog post that discusses some of <a target="_blank" href="https://blog.codinghorror.com/code-smells/">the more common smells</a>.
+        </p>
+        <h2>
+            Getting set up
+        </h2>
+        <p>
+            In Lab 1 (see the <a target="_blank" href="http://www.cdf.toronto.edu/~csc207h/winter/labs.shtml">Labs page</a>), you and your partner created a workspace called <code>CSC207Workspace</code>. If you didn't, please follow those instructions now, on the CS Teaching Labs (CSTL).
+        </p>
+        <p>
+            You should have checked out your repository in order to read this handout. Inside that repository is a directory called <code>a2</code>, and it contains this handout. It also contains a subdirectory <code>src</code>. Inside the <code>src</code> directory is the directory for the Java package used by the starter code, as well as the starter code itself.
+        </p>
+        <h3>
+            Setting up Eclipse
+        </h3>
+        <p>
+            As instructed on the a2 web handout, you should see <code>a2</code> as a directory in Eclipse, alongside <code>a1</code>.
+        </p>
+        <p>
+            You may need to "bless" the <code>src</code> directory as being important to the project.  If you can't run <code>FishTank.java</code> because of an error <code>"Selection does not contain a main type."</code>, then right-click your project and select <code>Build Path-&gt;Configure Build Path</code>. Click button <code>Add Folder</code>, and in the <code>Source Folder Selection</code> expand <code>a2</code> and click the checkbox next to <code>src</code>. Click <code>Apply</code>.  Close any open files, reopen them, and you should be good to go.
+        </p>
+        <p>
+            <strong>Don't change the code yet.</strong>
+        </p>
+        <p>
+            Run the program. You should see a window containing fish, bubbles, and seaweed. After awhile, maybe 15 seconds and maybe as much more, it crashes with an error that looks something like this:
+        </p>
+        <pre>
+        Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: -1
+            at fishtank.Fish.blowBubble(Fish.java:54)
+            at fishtank.Fish.move(Fish.java:143)
+            at fishtank.FishTank.main(FishTank.java:73)
+
+</pre>
+        <p>
+            You'll fix this as you work through the assignment. <strong>Don't debug it yet. In fact, don't do try to fix it until you've finished the rest of the assignment.</strong>
+        </p>
+        <h3>
+            The Google Java Style Guide (and Eclipse)
+        </h3>
+        <p>
+            Google has published a <a target="_blank" href="https://google.github.io/styleguide/javaguide.html">Java Style Guide</a>. <strong>You must set up Eclipse to use it for the first part of this assignment.</strong>
+        </p>
+        <p>
+            Download eclipse-java-google-style.xml from the <a href="https://github.com/google/styleguide">GitHub google/styleguide project</a>. You should be able to figure this out yourself — it's part of being a software developer — but other people have written instructions on <a target="_blank" href="https://github.com/HPI-Information-Systems/Metanome/wiki/Installing-the-google-styleguide-settings-in-intellij-and-eclipse">Installing the google styleguide settings in intellij and eclipse</a>.
+        </p>
+        <p>
+            Once it's installed, you can run it by right-clicking on an open Java file and selecting <code>Source-&gt;Format</code>.
+        </p>
+        <p>
+            If you need help, search the course discussion boards, and ask if you can't find an answer, ask!
+        </p>
+        <h3>
+            Checkstyle
+        </h3>
+        <p>
+            Checkstyle is <em>linter</em>, which is a program that checks code for style errors. There is an Eclipse Checkstyle plugin. To install it, go to <code>Help-&gt;Eclipse Marketplace</code>, and search for "Checkstyle Plug-in". Checkstyle knows about Google's Java style. As of this writing, the current version is 7.3.0.
+        </p>
+        <p>
+            Once it's installed, you can run it by right-clicking on an open Java file and selecting <code>Checkstyle-&gt;Check Code with Checkstyle</code>.
+        </p>
+        <h2>
+            What to do
+        </h2>
+        <p>
+            You must do this assignment one step a time, <strong>pushing your changes whenever you finish a step</strong>.
+        </p>
+        <h3>
+            Step 1: Create notes.txt
+        </h3>
+        <p>
+            Create a file called <code>notes.txt</code> in the <code>a2</code> directory of your repo. Copy and paste this into your file:
+        </p>
+        <pre>
+#########
+# Step 1
+
+Code affected: none
+
+Created this file.
+</pre>
+        <p>
+            Add and commit it with this commit message: <code>"Added notes.txt for keeping track of changes during a2."</code>. Copy and paste! Then push your changes.
+        </p>
+        <p>
+            <b>Sanity check:</b> Clone your repo again, somewhere else on your hard drive, and make sure that <code>a2/notes.txt</code> exists and has the expected contents. If it doesn't, keep trying until it does.
+        </p>
+        <h3>
+            Step 2: Reformat the starter code
+        </h3>
+        <p>
+            Open each .java file in turn and select <code>Source-&gt;Format</code>, or use the keyboard shortcut. Save all the files as you go. Don’t fix bugs, don’t manually add spaces, don’t move anything around, just use Google’s style formatter.
+        </p>
+        <p>
+            Run the program to make sure that it still works.
+        </p>
+        <p>
+            Make a note in <code>notes.txt</code> that you reformatted all the source code. Copy and paste this as your note:
+        </p>
+        <pre>
+#########
+# Step 2
+
+Code affected: all .java files
+
+Reformatted using the Google Java style formatter.
+</pre>
+        <p>
+            Git add each <code>.java</code> file, and also <code>notes.txt</code>. Commit and push.
+        </p>
+        <p>
+            It's up to you whether you want to do a sanity check, but we recommend it.
+        </p>
+        <p>
+            Notice that, so far, everyone's repositories should have exactly the same changes in them.
+        </p>
+        <h3>
+            Step 3: read the starter code
+        </h3>
+        <p>
+            There are many design flaws. Here's a simple one: method <code>turnAround</code> in class <code>Fish</code> has duplicate code and an unnecessary <code>if</code> statement. Fix it. That function only needs to be 2 lines long.
+        </p>
+        <p>
+            Add this note to notes.txt:
+        </p>
+        <pre>
+#########
+# Step 3
+
+Code affected: Fish.turnAround
+
+Flaw: unnecessary if, leading to duplicate code.
+
+Fix: replaced if statement with a single assignment statement.
+</pre>
+        <p>
+            That is the format that every one of your notes should follow: the list of things that are affected, the flaw that you addressed, and a note about how you fixed it. The flaw and the fix should be concise: no more than a couple of sentences each. <strong>The TAs will be using these notes as the primary guide to marking your assignment, so be clear in your communication.</strong> Bad grammar and spelling, unclear descriptions, and excessive verbosity will all receive marks deductions.
+        </p>
+        <p>
+            Add <code>notes.txt</code> and <code>Fish.java</code>, commit (with a clear commit message), and push.
+        </p>
+        <h3>
+            Step 4 to Step N-2
+        </h3>
+        <p>
+            This is where you will do the bulk of the work. Continue identifying flaws (code smells) and <strong>fix one per push</strong>. After each fix, make a clear note in <code>notes.txt</code>, then add, commit (with a clear commit message), and push your changes.
+        </p>
+        <p>
+            Run Checkstyle after each fix, and address Checkstyle flaws that are directly associated with the code that you just fixed. By the end of these steps, you should have resolved all the Checkstyle warnings. <strong>You will lose marks if there are any Checkstyle warnings left after your final push.</strong>
+        </p>
+        <p>
+            There are quite a few flaws in the code, and these steps will contain the bulk of your work: bad names, duplicate code, ugly code, nearly-duplicate classes, inappropriate print statements (when was the last time you ran an app that printed anything?), inappropriate use of <code>static</code>, chances to use inheritance, bad visibility modifiers, recalculating a value over an over when it only needs to be done once, and a huge waste of processing time looping over a <em>sparse</em> (nearly-empty) 2D array are all candidates. You will be marked on the quality of your fixes. By the end of this process, there should be no obvious design problems.
+        </p>
+        <h3>
+            Step N-1: fix the bug/memory leak
+        </h3>
+        <p>
+            By now, you should know the code quite well. The bug described at the top happened when a fish swam outside the window and blew a bubble, creating it with a negative index in the 2D array. You might still have a memory leak related to this: <code>Bubble</code>s float above the window forever, as long as something points to them. Fix this by either preventing creatures from moving outside the window (fish, for example), or removing them from your data structures when they float too high (bubbles) so that they get garbage collected. Use common sense to decide which creatures fall into each category.
+        </p>
+        <p>
+            Describe your fixes in <code>notes.txt</code>, and add, commit, and push your changes. If you fixed it in an ealier step, say which one.
+        </p>
+        <h3>
+            Step N: add a new fish tank item
+        </h3>
+        <p>
+            Now that your code is beautiful, design and add at least one new item to your fish tank. It doesn't have to be particularly complicated, but your item <strong>must</strong> interact with other items in the fish tank. For example, you might make a snail that moves around the bottom of the tank and eats pieces of seaweed, a shark that chases nearby fish and eats them, or a new kind of fish that swim around together in a school. There are many possibilities, and we're running MOSS to detect similarities, so please don't copy from each other. Whatever item you choose, write the code yourself.
+        </p>
+        <p>
+            Make a final note in <code>notes.txt</code> describing your new item: what is it, and what behaviour does it have? There isn't a flaw, so just describe your change in a concise paragraph or bullet-point form after the <code># Step N</code> note header.
+        </p>
+    </body>
+</html>
